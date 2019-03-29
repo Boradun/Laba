@@ -10,7 +10,7 @@ namespace Laba
     class Labirinth
     {
         CellType[,] _labirinth;
-
+        Random random = new Random();
         internal Labirinth(int Level)
         {
             _labirinth = new CellType[Level*2-1, Level*2-1];
@@ -86,9 +86,7 @@ namespace Laba
                 points.Add(new Point(cell.X , cell.Y+2));
             }
             if (points.Count != 0)
-            {
-                Thread.Sleep(10);
-                Random random = new Random();
+            {                
                 return points[random.Next(points.Count)];
             }
             else
@@ -96,7 +94,6 @@ namespace Laba
                 return null;
             }
         }
-
         private class Point
         {
             internal Point(int x, int y)

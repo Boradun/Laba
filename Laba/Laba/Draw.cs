@@ -10,22 +10,29 @@ namespace Laba
 {
     static class Draw
     {
-        static Bitmap bitmap = new Bitmap(800, 800);
-        static PictureBox _pictureBox = new PictureBox() { Width = 800, Height = 800, Location = new Point(10, 10),BackgroundImage=bitmap };
-        
-        
+        static Bitmap backgroundBitmap = new Bitmap(800, 800);
+        static Bitmap mainBitmap = new Bitmap(800, 800);
+        static PictureBox _pictureBox = new PictureBox() { Width = 800, Height = 800, Location = new Point(10, 10),BackgroundImage=backgroundBitmap,Image=mainBitmap };
 
 
-        static internal PictureBox GetNewPictureBox(int Level)
+        static internal void ReDrawHero(int HeroOldPositionX,int HeroOldPositionY,int HeroNewositionX,int HeroNewPositionY,int HeroLevel)
         {
-            DrawBackgroundImage(30);
+            float cellWeight = 800.0f / ((float)HeroLevel * 2.0f - 1.0f);
+            Graphics graphics = Graphics.FromImage(mainBitmap);
+            graphics.FillRectangle(Brushes.Yellow, HeroOldPositionX*cellWeight, HeroOldPositionY*cellWeight, cellWeight, cellWeight);
+            graphics.FillRectangle(Brushes.Red, HeroNewositionX*cellWeight, HeroNewPositionY*cellWeight, cellWeight, cellWeight);
+            _pictureBox.Invalidate();
+        }
+
+        static internal PictureBox GetNewPictureBox()
+        {
             return _pictureBox;
         }
 
-        private static void DrawBackgroundImage(int Level)
+        internal static void DrawBackgroundImage(Labirinth laba,int Level)
         {
-            Graphics g = Graphics.FromImage(bitmap);
-            Labirinth laba = new Labirinth(Level);
+            Graphics g = Graphics.FromImage(backgroundBitmap);
+            
 
 
             g.FillRectangle(Brushes.White, 0, 0, 800, 800);
